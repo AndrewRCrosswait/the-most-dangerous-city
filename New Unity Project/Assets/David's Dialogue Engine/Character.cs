@@ -8,25 +8,26 @@ using RpgEngine.Dialoug;
 
 [Serializable]
 public class Sentence{
-    public string Diologue, Name;
-    public Sprite Frame;
+    public string Diologue;
     [NonSerialized]public float FrameTime;
-
+    public Image Icon;
 }
 
 public class Character : MonoBehaviour
 {
-
+    public DialogueManager DM;
+    [SerializeField] public Sentence[] Content;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Talking == false)
+                if (DM.dialogueMenu.activeSelf == false)
                 {
-                    Talking = true;
-                    StartConversation();
+                    DM.talkingTo = gameObject.GetComponent<Character>();
+                    DM.dialogueMenu.SetActive(true);
+                    DM.startconvo();
                     print("works");
                 }
             }
@@ -40,7 +41,7 @@ public class Character : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Talking = false;
-        End();
+        DM.dialogueMenu.SetActive(false);
+        //End();
     }
 }

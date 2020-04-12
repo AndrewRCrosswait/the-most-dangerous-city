@@ -11,12 +11,12 @@ namespace RpgEngine.Dialoug
         /// <summary>
         /// The parent of the dialogue objects.
         /// </summary>
-        public GameObject dialogueMenu, Options;
+        public GameObject dialogueMenu;
 
         /// <summary>
         /// The top text box.
         /// </summary>
-        public Text CharacterATextObject;
+        public Text Content;
         public Text NameText;
         
         /// <summary>
@@ -27,21 +27,40 @@ namespace RpgEngine.Dialoug
         /// <summary>
         /// What we are currently displaying.
         /// </summary>
-        string currentMessage;
-
-        
-        public void DisplayMessage(string chaAMessage, string[] chaBMessage, Character talkingTo)
-        {
-            NameText.text = talkingTo.gameObject.name;
-            timeStartedConversation = Time.time;
-
-            selectedReply = 0;
-
-            currentMessage = chaAMessage;
-
-            replies = chaBMessage;
-
-            this.talkingTo = talkingTo;
+        public Image Icon;
+        int x=0;
+       public void startconvo() {
+            if (talkingTo != null)
+            {
+                Debug.Log(talkingTo.name);
+                // timeStartedConversation = Time.time;
+                if (x != talkingTo.Content.Length)
+                {
+                    Debug.Log("We have content to run");
+                    //  NameText.text = talkingTo.gameObject.name;
+                    Content.text = talkingTo.Content[x].Diologue;
+                    Icon = talkingTo.Content[x].Icon;
+                }
+                else
+                {
+                    talkingTo = null;
+                    Content.text = "";
+                    dialogueMenu.SetActive(false);
+                }
+            }
+        }
+        public void Next() {
+            if (x != talkingTo.Content.Length-1)
+            {
+                x++;
+                Content.text = talkingTo.Content[x].Diologue;
+                Icon = talkingTo.Content[x].Icon;
+            }
+            else {
+                x = 0;
+                talkingTo = null;
+                dialogueMenu.SetActive(false);
+            }
         }
 
     }
