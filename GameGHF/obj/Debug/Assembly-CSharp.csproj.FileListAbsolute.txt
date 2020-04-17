@@ -1,0 +1,2 @@
+C:\Users\wer65\OneDrive\Game Projects\Repos\Unity2D\most dangerous city\the-most-dangerous-city\New Unity Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\wer65\OneDrive\Game Projects\Repos\Unity2D\most dangerous city\the-most-dangerous-city\New Unity Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
