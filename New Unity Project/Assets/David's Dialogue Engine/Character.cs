@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,12 +14,14 @@ public class Sentence{
     public Image Icon;
 }
 
-public class Character : MonoBehaviour
+public class Character : Entity
 {
     public DialogueManager DM;
     [SerializeField] public Sentence[] Content;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
+
         if (collision.gameObject.tag == "Player")
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -29,6 +32,13 @@ public class Character : MonoBehaviour
                     DM.dialogueMenu.SetActive(true);
                     DM.startconvo();
                     print("works");
+                }
+                foreach (Mission m in Missions)
+                {
+                    Instantiate(m.Goal, m.t, Quaternion.identity);
+                    collision.gameObject.GetComponent<Player>().Missions.Add(m);
+                    DM.Notification.gameObject.SetActive(true);
+                    DM.Notification.text = " Misson Added ";
                 }
             }
         }
@@ -41,6 +51,7 @@ public class Character : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        DM.Notification.gameObject.SetActive(false);
         DM.dialogueMenu.SetActive(false);
         //End();
     }

@@ -16,7 +16,7 @@ namespace RpgEngine.Dialoug
         /// <summary>
         /// The top text box.
         /// </summary>
-        public Text Content;
+        public Text Content,Notification;
         public Text NameText;
         
         /// <summary>
@@ -28,18 +28,19 @@ namespace RpgEngine.Dialoug
         /// What we are currently displaying.
         /// </summary>
         public Image Icon;
-        int x=0;
+        int CurrentIndex=0;
+
        public void startconvo() {
             if (talkingTo != null)
             {
                 Debug.Log(talkingTo.name);
                 // timeStartedConversation = Time.time;
-                if (x != talkingTo.Content.Length)
+                if (CurrentIndex != talkingTo.Content.Length)
                 {
                     Debug.Log("We have content to run");
-                    //  NameText.text = talkingTo.gameObject.name;
-                    Content.text = talkingTo.Content[x].Diologue;
-                    Icon = talkingTo.Content[x].Icon;
+                    NameText.text = talkingTo.gameObject.name;
+                    Content.text = talkingTo.Content[CurrentIndex].Diologue;
+                    Icon = talkingTo.Content[CurrentIndex].Icon;
                 }
                 else
                 {
@@ -50,14 +51,14 @@ namespace RpgEngine.Dialoug
             }
         }
         public void Next() {
-            if (x != talkingTo.Content.Length-1)
+            if (CurrentIndex != talkingTo.Content.Length-1)
             {
-                x++;
-                Content.text = talkingTo.Content[x].Diologue;
-                Icon = talkingTo.Content[x].Icon;
+                CurrentIndex++;
+                Content.text = talkingTo.Content[CurrentIndex].Diologue;
+                Icon = talkingTo.Content[CurrentIndex].Icon;
             }
             else {
-                x = 0;
+                CurrentIndex = 0;
                 talkingTo = null;
                 dialogueMenu.SetActive(false);
             }
