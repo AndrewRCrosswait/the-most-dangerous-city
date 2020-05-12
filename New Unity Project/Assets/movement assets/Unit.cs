@@ -2,25 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : Entity
 {
+
+    public GameObject intro;
     public Transform target;
     float speed = 10;
     float speedMultiplyer = .05f;
     
     Vector3[] path;
     int targetIndex;
+
+
+
      void Update()
     {
 
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-        float distance = Vector3.Distance(target.position, transform.position);
-        if(distance > 20)
+        if (!intro.activeSelf)
         {
-            speed = 5;
-        } else if(distance < 20)
-        {
-            speed = 10;
+
+
+            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+            float distance = Vector3.Distance(target.position, transform.position);
+
+
+
+            if (distance > 20)
+            {
+                speed = 5;
+            }
+            else if (distance < 20)
+            {
+                speed = 10;
+            }
         }
 
     }

@@ -236,7 +236,7 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 1024
-  gridWorldSize: {x: 37, y: 37}
+  gridWorldSize: {x: 34, y: 33}
   nodeRadius: 0.5
 --- !u!4 &411760177
 Transform:
@@ -536,8 +536,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449383218}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.07, y: -0, z: 0}
-  m_LocalScale: {x: 3.6949499, y: 2, z: 3.6747007}
+  m_LocalPosition: {x: -0.012, y: -0.005, z: 0}
+  m_LocalScale: {x: 3.3434522, y: 2, z: 3.3305867}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -667,6 +667,7 @@ MonoBehaviour:
   money: 0
   exp: 0
   Lvl: 0
+  intro: {fileID: 1881140594}
 --- !u!212 &523317145
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -807,7 +808,7 @@ GameObject:
   - component: {fileID: 909331936}
   - component: {fileID: 909331935}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Display Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -853,11 +854,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 50
+    m_MaxSize: 20
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1172,7 +1173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1232505198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1508,6 +1509,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e47e0b8d817264aa5bf48b4135a4bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 0
+  Attack: 0
+  WillPower: 0
+  Speed: 0
+  Name: 
+  Missions: []
+  intro: {fileID: 1881140594}
   target: {fileID: 523317146}
 --- !u!1 &1288990677
 GameObject:
@@ -1796,8 +1804,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1493502852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.32, y: 6.61, z: -17.02539}
-  m_LocalScale: {x: 0.62109375, y: 0.9125, z: 1}
+  m_LocalPosition: {x: -2.16, y: 5.99, z: -17.02539}
+  m_LocalScale: {x: 0.5673303, y: 0.8140868, z: 1}
   m_Children:
   - {fileID: 1288990679}
   - {fileID: 227082548}
@@ -2166,8 +2174,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 8, y: -164}
-  m_SizeDelta: {x: 290.4574, y: 62.899994}
+  m_AnchoredPosition: {x: 119.5, y: -164}
+  m_SizeDelta: {x: 513.3835, y: 62.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835243902
 MonoBehaviour:
@@ -2261,6 +2269,64 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1881140594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1881140596}
+  - component: {fileID: 1881140595}
+  m_Layer: 0
+  m_Name: Intro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1881140595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881140594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a99feb8a52be242926485c4677000e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Display: {fileID: 909331935}
+  NameDisplay: {fileID: 425740474}
+  Handler: {fileID: 1835243900}
+  CurrentFrame: {fileID: 1194238859}
+  Scenes:
+  - Diologue: Hello, Welcome to the game
+    Name: Mission
+    Frame: {fileID: 0}
+  - Diologue: Your goal is to not get hunted
+    Name: Mission
+    Frame: {fileID: 0}
+  - Diologue: Good luck, bye
+    Name: Mission
+    Frame: {fileID: 0}
+  NextScene: 
+--- !u!4 &1881140596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881140594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.2750568, y: 3.4536035, z: -684.64026}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1894140137
 GameObject:
   m_ObjectHideFlags: 0
