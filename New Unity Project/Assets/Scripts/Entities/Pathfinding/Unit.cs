@@ -10,13 +10,14 @@ public class Unit : Entity
     public Transform targetPos;
     float speed = 10;
     float speedMultiplyer = .05f;
-    public Grid g;
+    public GridNode g;
+    public Grid G;
     Vector3[] path;
     int targetIndex;
     public bool randomMovement;
     public bool rPosReached;
     public GameObject plane;
-    
+
 
     //void Start()
     //{
@@ -31,16 +32,16 @@ public class Unit : Entity
 
         if (!intro.activeSelf)
         {
-            
-                if (distance <= 20)
-                {
-                    speed = 10;
-                    PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 
-                } 
-                
-            
-            if (distance > 20)
+            if (distance <= 20)
+            {
+                speed = 10;
+                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+
+            }
+
+
+            else if (distance > 20)
             {
                 speed = 5;
 
@@ -49,14 +50,18 @@ public class Unit : Entity
                 {
                     Random.InitState((int)System.DateTime.Now.Ticks);
                     targetPos.position = new Vector3(range(-16f, 16f), range(-16f, 16f), 0);
-                    rPosReached = false;
+                    g = G.NodeFromWorldPoint(targetPos.position);
+                    if (g.walkable)
+                    {
+                        rPosReached = false;
+                    }
                 }
 
                 //Follow Path
                 PathRequestManager.RequestPath(transform.position, targetPos.position, OnPathFound);
 
                 //check if location has been reached, if it has randomize again
-                if(Vector3.Distance(targetPos.position, gameObject.transform.position) < 3)
+                if (Vector3.Distance(targetPos.position, gameObject.transform.position) < 3)
                 {
                     Debug.Log("Position Reached");
 
@@ -65,7 +70,7 @@ public class Unit : Entity
 
 
             }
-            
+
 
         }
 
@@ -73,9 +78,9 @@ public class Unit : Entity
 
     public void generateRandPos(Vector3 target)
     {
-      
-            PathRequestManager.RequestPath(transform.position, target, OnPathFound);
-        
+
+        PathRequestManager.RequestPath(transform.position, target, OnPathFound);
+
     }
 
 

@@ -1489,7 +1489,7 @@ MonoBehaviour:
   intro: {fileID: 1881140594}
   target: {fileID: 523317146}
   targetPos: {fileID: 2099773533}
-  g: {fileID: 0}
+  G: {fileID: 411760176}
   randomMovement: 0
   rPosReached: 0
   plane: {fileID: 449383218}
