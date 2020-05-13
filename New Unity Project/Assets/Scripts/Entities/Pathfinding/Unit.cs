@@ -7,37 +7,85 @@ public class Unit : Entity
 
     public GameObject intro;
     public Transform target;
+    public Transform targetPos;
     float speed = 10;
     float speedMultiplyer = .05f;
-    
+    public Grid g;
     Vector3[] path;
     int targetIndex;
+    public bool randomMovement;
+    public bool rPosReached;
+    public GameObject plane;
+    
 
+    //void Start()
+    //{
 
+    //    targetPos.position = new Vector3(range(0, plane.transform.position.x), range(0, plane.transform.position.y), 0);
+    //    generateRandPos(targetPos.position);
+    //}
 
-     void Update()
+    void Update()
     {
+        float distance = Vector3.Distance(target.position, transform.position);
 
         if (!intro.activeSelf)
         {
+            
+                if (distance <= 20)
+                {
+                    speed = 10;
+                    PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 
-
-            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-            float distance = Vector3.Distance(target.position, transform.position);
-
-
-
+                } 
+                
+            
             if (distance > 20)
             {
                 speed = 5;
+
+                //Randomize location to move to
+                if (rPosReached)
+                {
+                    Random.InitState((int)System.DateTime.Now.Ticks);
+                    targetPos.position = new Vector3(range(-16f, 16f), range(-16f, 16f), 0);
+                    rPosReached = false;
+                }
+
+                //Follow Path
+                PathRequestManager.RequestPath(transform.position, targetPos.position, OnPathFound);
+
+                //check if location has been reached, if it has randomize again
+                if(Vector3.Distance(targetPos.position, gameObject.transform.position) < 3)
+                {
+                    Debug.Log("Position Reached");
+
+                    rPosReached = true;
+                }
+
+
             }
-            else if (distance < 20)
-            {
-                speed = 10;
-            }
+            
+
         }
 
     }
+
+    public void generateRandPos(Vector3 target)
+    {
+      
+            PathRequestManager.RequestPath(transform.position, target, OnPathFound);
+        
+    }
+
+
+
+    public float range(float min, float max)
+    {
+        return Random.Range(min, max + 1);
+    }
+
+
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
     {
@@ -54,10 +102,10 @@ public class Unit : Entity
         Vector3 currentWaypoint = path[0];
         while (true)
         {
-            if(transform.position == currentWaypoint)
+            if (transform.position == currentWaypoint)
             {
                 targetIndex++;
-                if(targetIndex >= path.Length)
+                if (targetIndex >= path.Length)
                 {
                     yield break;
                 }
@@ -70,16 +118,17 @@ public class Unit : Entity
 
     public void OnDrawGizmos()
     {
-        if(path != null)
+        if (path != null)
         {
-            for(int i = targetIndex; i < path.Length; i++)
+            for (int i = targetIndex; i < path.Length; i++)
             {
                 Gizmos.color = Color.black;
                 Gizmos.DrawCube(path[i], Vector3.one);
-                if(i == targetIndex)
+                if (i == targetIndex)
                 {
                     Gizmos.DrawLine(transform.position, path[i]);
-                } else
+                }
+                else
                 {
                     Gizmos.DrawLine(path[i - 1], path[i]);
                 }
