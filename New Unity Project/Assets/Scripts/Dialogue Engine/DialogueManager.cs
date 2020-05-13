@@ -27,7 +27,7 @@ namespace RpgEngine.Dialoug
         /// <summary>
         /// What we are currently displaying.
         /// </summary>
-        public Image Icon;
+        public Sprite Icon;
         int CurrentIndex=0;
 
        public void startconvo() {

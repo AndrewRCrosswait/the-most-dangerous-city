@@ -11,7 +11,7 @@ using RpgEngine.Dialoug;
 public class Sentence{
     public string Diologue;
     [NonSerialized]public float FrameTime;
-    public Image Icon;
+    public Sprite Icon;
 }
 
 public class Character : MonoBehaviour
@@ -26,6 +26,7 @@ public class Character : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                
                 if (DM.dialogueMenu.activeSelf == false)
                 {
                     DM.talkingTo = gameObject.GetComponent<Character>();
@@ -36,10 +37,7 @@ public class Character : MonoBehaviour
             }
         }
 
-        else
-        {
-            print("Currently talking");
-        }
+        
 
     }
     private void OnTriggerExit2D(Collider2D collision)
