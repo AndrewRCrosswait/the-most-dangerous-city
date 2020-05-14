@@ -5,7 +5,7 @@ using UnityEngine;
 public class Unit : Entity
 {
 
-    public GameObject dialogueBox;
+    public GameObject intro;
     public Transform target;
     public Transform targetPos;
     float speed = 10;
@@ -14,6 +14,7 @@ public class Unit : Entity
     public Grid G;
     Vector3[] path;
     int targetIndex;
+    public bool randomMovement;
     public bool rPosReached;
     public GameObject plane;
 
@@ -29,21 +30,19 @@ public class Unit : Entity
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
-        if (dialogueBox.activeSelf == false)
+        if (!intro.activeSelf)
         {
-            Debug.Log("off/not talking");
+
             if (distance <= 20)
             {
-                if (gameObject.tag == "Enemy")
-                {
-                    speed = 10;
-                    PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-                }
+                speed = 10;
+                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+
             }
 
 
-            else if (distance > 20 || gameObject.tag == "Character")
-            { 
+            else if (distance > 20)
+            {
                 speed = 5;
 
                 //Randomize location to move to
@@ -74,7 +73,6 @@ public class Unit : Entity
 
 
         }
-       
 
     }
 
