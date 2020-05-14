@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagementHandler : MonoBehaviour
 {
-    public int current= 0;
+    public int current= 0; //Keeps Track of Current Scene
 
     public void LoadCurrentScene()
     {
@@ -20,11 +20,11 @@ public class SceneManagementHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        current = SceneManager.GetActiveScene().buildIndex;
+        current = SceneManager.GetActiveScene().buildIndex; //Updates Current Scene As the Active Scene
     }
     
     public void ReloadScene(string TargetScene)
     {
-        SceneManager.LoadScene(TargetScene);
+        SceneManager.LoadScene(TargetScene); //Loads Target Scene
     }
 }
