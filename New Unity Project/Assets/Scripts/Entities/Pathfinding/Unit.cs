@@ -7,7 +7,7 @@ public class Unit : Entity
 
     public GameObject intro;
     public Transform target;
-    public Transform targetPos;
+    Vector3 targetPos;
     float speed = 10;
     float speedMultiplyer = .05f;
     public GridNode g;
@@ -26,6 +26,13 @@ public class Unit : Entity
     //    generateRandPos(targetPos.position);
     //}
 
+    void Start()
+    {
+        Random.InitState((int)System.DateTime.Now.Ticks);
+        rPosReached = true;
+    }
+
+
     void Update()
     {
         float distance = Vector3.Distance(target.position, transform.position);
@@ -33,9 +40,10 @@ public class Unit : Entity
         if (!intro.activeSelf)
         {
 
-            if (distance <= 20)
+            if (distance <= 20 && gameObject.tag == "Enemy")
             {
                 speed = 10;
+                Debug.Log("persuing...");
                 PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 
             }
@@ -46,25 +54,28 @@ public class Unit : Entity
                 speed = 5;
 
                 //Randomize location to move to
+                
                 if (rPosReached)
                 {
+                    Debug.Log("Randomizing...");
                     Random.InitState((int)System.DateTime.Now.Ticks);
-                    targetPos.position = new Vector3(range(-16f, 16f), range(-16f, 16f), 0);
-                    g = G.NodeFromWorldPoint(targetPos.position);
+                    targetPos = new Vector3(range(-16f, 16f), range(-16f, 16f), 0);
+                    g = G.NodeFromWorldPoint(targetPos);
                     if (g.walkable)
                     {
+                        Debug.Log("heading...");
                         rPosReached = false;
                     }
                 }
 
                 //Follow Path
-                PathRequestManager.RequestPath(transform.position, targetPos.position, OnPathFound);
+                PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+
 
                 //check if location has been reached, if it has randomize again
-                if (Vector3.Distance(targetPos.position, gameObject.transform.position) < 3)
+                if (Vector3.Distance(targetPos, gameObject.transform.position) < 3)
                 {
                     Debug.Log("Position Reached");
-
                     rPosReached = true;
                 }
 

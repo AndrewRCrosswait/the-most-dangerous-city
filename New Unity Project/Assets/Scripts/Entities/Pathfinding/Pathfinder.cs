@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Diagnostics;
 
 public class Pathfinder : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class Pathfinder : MonoBehaviour
         Vector3[] waypoints = new Vector3[0];
         bool pathSuccess = false;
 
+
+
         GridNode startNode = grid.NodeFromWorldPoint(startPos);
         GridNode targetNode = grid.NodeFromWorldPoint(targetPos);
 
@@ -36,27 +39,18 @@ public class Pathfinder : MonoBehaviour
         {
 
         
-        List<GridNode> openSet = new List<GridNode>();
+        Heap<GridNode> openSet = new Heap<GridNode>(grid.MaxSize);
         HashSet<GridNode> closedSet = new HashSet<GridNode>();
         openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
-                GridNode currentNode = openSet[0];
-                for (int i = 1; i < openSet.Count; i++)
-                {
-                    if (openSet[i].fcost < currentNode.fcost || openSet[i].fcost == currentNode.fcost && openSet[i].hCost < currentNode.hCost)
-                    {
-                        currentNode = openSet[i];
-                    }
-                }
-                openSet.Remove(currentNode);
+                GridNode currentNode = openSet.RemoveFirst();
                 closedSet.Add(currentNode);
 
                 if (currentNode == targetNode)
                 {
                     pathSuccess = true;
-
                     break;
                 }
 
@@ -73,9 +67,10 @@ public class Pathfinder : MonoBehaviour
                         neighbour.hCost = getDistance(neighbour, targetNode);
                         neighbour.parent = currentNode;
                         if (!openSet.Contains(neighbour))
-                        {
                             openSet.Add(neighbour);
-                        }
+                        else
+                            openSet.UpdateItem(neighbour);
+                        
                     }
                 }
             }
