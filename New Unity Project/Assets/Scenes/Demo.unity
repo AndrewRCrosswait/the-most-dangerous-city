@@ -499,7 +499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &431598638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,20 +509,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 431598637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e47e0b8d817264aa5bf48b4135a4bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 247bb64119ed512408fd7f460789cf51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 5
-  Attack: 1
-  WillPower: 0
-  Speed: 0
-  Name: 
-  intro: {fileID: 1881140594}
-  target: {fileID: 523317146}
-  G: {fileID: 411760176}
-  randomMovement: 0
-  rPosReached: 0
-  plane: {fileID: 449383218}
+  DialogueBox: {fileID: 1881140594}
+  Speed: 2
+  XDirection: 0
+  YDirection: 0
 --- !u!50 &431598639
 Rigidbody2D:
   serializedVersion: 4
@@ -629,8 +622,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431598637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.04, y: -13.18, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.11177549}
+  m_LocalPosition: {x: -12.87, y: -7.48, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.11177549}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -971,6 +964,7 @@ MonoBehaviour:
   DeadSprite: {fileID: -2895166857184960331, guid: 477d05c8d0f5f964abb789642a2b068f,
     type: 3}
   timer: 30
+  anim: {fileID: 0}
 --- !u!212 &523317145
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1839,7 +1833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241438277}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.63, y: 9.91, z: 0}
+  m_LocalPosition: {x: 9.6, y: 9.91, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.11177549}
   m_Children: []
   m_Father: {fileID: 0}
