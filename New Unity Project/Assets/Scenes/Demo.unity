@@ -152,7 +152,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.28480977, y: 0.458858}
+  m_Offset: {x: -0.28480977, y: -0.1243}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -163,7 +163,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.43038046, y: 9.069621}
+  m_Size: {x: 0.43038046, y: 1.3839054}
   m_EdgeRadius: 0
 --- !u!114 &24410649
 MonoBehaviour:
@@ -494,6 +494,8 @@ GameObject:
   - component: {fileID: 431598639}
   - component: {fileID: 431598638}
   - component: {fileID: 431598643}
+  - component: {fileID: 431598644}
+  - component: {fileID: 431598645}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Character
@@ -513,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247bb64119ed512408fd7f460789cf51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueBox: {fileID: 1881140594}
+  DialogueBox: {fileID: 1835243900}
   Speed: 2
   XDirection: 0
   YDirection: 0
@@ -624,7 +626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431598637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.87, y: -7.48, z: 0}
+  m_LocalPosition: {x: -12.1, y: -12.08, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.11177549}
   m_Children: []
   m_Father: {fileID: 0}
@@ -649,6 +651,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &431598644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431598637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc97a1f50aa9c34e9b5434a88091320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DM: {fileID: 1455302062}
+  Content:
+  - Diologue: Hiya fuckface
+    Icon: {fileID: 1194238861}
+--- !u!58 &431598645
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431598637}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.51353073}
+  serializedVersion: 2
+  m_Radius: 1.6335306
 --- !u!1 &440710351
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,7 +941,7 @@ Camera:
   far clip plane: 1000
   field of view: 155
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.7622204
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -931,7 +965,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.32, y: -9.39, z: -10}
+  m_LocalPosition: {x: -5.08, y: 6.26, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1562,7 +1596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1232505198
 MonoBehaviour:
   m_ObjectHideFlags: 0

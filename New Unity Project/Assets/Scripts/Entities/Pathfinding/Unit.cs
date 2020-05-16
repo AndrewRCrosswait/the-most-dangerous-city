@@ -18,6 +18,7 @@ public class Unit : Entity
     public bool rPosReached;
     public GameObject plane;
     public Animator anim;
+    public float DistanceAllowed = 20;
 
 
     //void Start()
@@ -47,7 +48,7 @@ public class Unit : Entity
                 anim.SetFloat("yInput", transform.position.y);
             }
 
-            if (distance <= 20 && gameObject.tag == "Enemy")
+            if (distance <= DistanceAllowed && gameObject.tag == "Enemy")
             {
                 speed = 10;
                 Debug.Log("persuing...");
@@ -56,7 +57,7 @@ public class Unit : Entity
             }
 
 
-            else if (distance > 20)
+            else if (distance > DistanceAllowed)
             {
                 speed = 5;
 

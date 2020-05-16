@@ -26,6 +26,7 @@ public class Character : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                Debug.Log("e pressed");
                 if (DM.dialogueMenu.activeSelf == false)
                 {
                     DM.talkingTo = gameObject.GetComponent<Character>();
