@@ -9,12 +9,14 @@ public class NPCMovement : MonoBehaviour
     public GameObject DialogueBox;
     public float Speed = 2;
     public float XDirection, YDirection;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         XDirection = range(-5,5);
         YDirection = range(-5,5);
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,8 +27,12 @@ public class NPCMovement : MonoBehaviour
             Debug.Log("Move");
             transform.Translate(XDirection * Time.deltaTime, YDirection * Time.deltaTime, 0);
         }
+        if (XDirection != 0f && YDirection != 0f)
+        {
+            anim.SetFloat("xInput", XDirection);
+            anim.SetFloat("yInput", YDirection);
+        }
     }
-
 
     private void OnCollisionStay2D(Collision2D collision)
     {

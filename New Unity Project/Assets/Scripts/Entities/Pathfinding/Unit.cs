@@ -17,6 +17,7 @@ public class Unit : Entity
     public bool randomMovement;
     public bool rPosReached;
     public GameObject plane;
+    public Animator anim;
 
 
     //void Start()
@@ -30,6 +31,7 @@ public class Unit : Entity
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
         rPosReached = true;
+        anim = GetComponent<Animator>();
     }
 
 
@@ -39,6 +41,11 @@ public class Unit : Entity
 
         if (!intro.activeSelf)
         {
+            if (transform.position.x != 0f && transform.position.y != 0f)
+            {
+                anim.SetFloat("xInput", transform.position.x);
+                anim.SetFloat("yInput", transform.position.y);
+            }
 
             if (distance <= 20 && gameObject.tag == "Enemy")
             {
