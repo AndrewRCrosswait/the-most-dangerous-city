@@ -10,22 +10,21 @@ public class Player : Entity
     public Sprite DeadSprite;
     public float timer = 5f;
 
-    public Animator Animate;
+    public Animator anim;
 
     // Start is called before the first frame update
     private void Start()
     {
-
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     private void Update()
     {
+        Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
         if (!intro.activeSelf)
         {
-            Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
             transform.position = transform.position + Movement * Speed * Time.deltaTime;
-            Animate.angularVelocity
         }
         if (!Alive())
         {
@@ -38,6 +37,17 @@ public class Player : Entity
             Debug.Log("destroyyyed:" + gameObject.name);
             gameObject.GetComponent<SpriteRenderer>().sprite = DeadSprite;
         }
+        if(Movement != Vector3.zero)
+        {
+            anim.SetFloat("xInput", Movement.x);
+            anim.SetFloat("yInput", Movement.y);
+            anim.SetBool("isMoving", true);
+        }
+        else
+        {
+            anim.SetBool("isMoving", false);
+        }
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
