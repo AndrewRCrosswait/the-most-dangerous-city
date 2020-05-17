@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MissionObject : MonoBehaviour
 {
+    public SceneManagementHandler SMH;
 
     // Start is called before the first frame update
     void Start()
@@ -17,11 +18,13 @@ public class MissionObject : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameObject.Destroy(gameObject);
+            Debug.Log("touchy");
+            SMH.current++;
+            SMH.LoadCurrentScene();
         }
     }
 }

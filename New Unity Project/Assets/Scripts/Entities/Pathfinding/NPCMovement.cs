@@ -14,6 +14,7 @@ public class NPCMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DialogueBox = GameObject.Find("Dialogue Box");
         XDirection = range(-5,5);
         YDirection = range(-5,5);
         anim = GetComponent<Animator>();

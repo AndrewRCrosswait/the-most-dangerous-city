@@ -4,28 +4,23 @@ using UnityEngine;
 
 public class TransitionController : MonoBehaviour
 {
+    public string info, RoomName;
     public Vector2 CameraChange;
     public Vector3 PlayerChange;
-    private CameraMovementBehavior c;
-    public GameObject C;
+    private CameraMovementBehavior MovementBehavior;
+    public GameObject TargetCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        c = C.GetComponent<CameraMovementBehavior>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        MovementBehavior = TargetCamera.GetComponent<CameraMovementBehavior>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) {
-            c.MinPosition += CameraChange;
-            c.MaxPosition += CameraChange;
+            MovementBehavior.MinPosition += CameraChange;
+            MovementBehavior.MaxPosition += CameraChange;
             collision.transform.position += PlayerChange;
         }
     }

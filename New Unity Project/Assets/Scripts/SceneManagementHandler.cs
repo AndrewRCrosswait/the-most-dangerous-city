@@ -11,11 +11,6 @@ public class SceneManagementHandler : MonoBehaviour
     {
         SceneManager.LoadScene(current);
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

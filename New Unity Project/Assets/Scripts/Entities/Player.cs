@@ -4,48 +4,46 @@
 public class Player : Entity
 {
     public Animator Anime => gameObject.GetComponent<Animator>();
-    public int money, exp, Lvl;
-    public GameObject intro, blood;
+    public GameObject DialogueBox, Blood;
     public SceneManagementHandler SMH;
     public Sprite DeadSprite;
-    public float timer = 5f;
+    public float Timer = 5f;
 
-    public Animator anim;
+    public Animator Anim;
 
     // Start is called before the first frame update
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        Anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     private void Update()
     {
         Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
-        if (!intro.activeSelf)
+        if (!DialogueBox.activeSelf)
         {
             transform.position = transform.position + Movement * Speed * Time.deltaTime;
         }
         if (!Alive())
         {
-            timer-= .1f;
-            if (timer <= 0)
+            Timer -= .1f;
+            if (Timer <= 0)
             {
                 SMH.LoadCurrentScene();
             }
             Speed = 0;
-            Debug.Log("destroyyyed:" + gameObject.name);
             gameObject.GetComponent<SpriteRenderer>().sprite = DeadSprite;
         }
         if(Movement != Vector3.zero)
         {
-            anim.SetFloat("xInput", Movement.x);
-            anim.SetFloat("yInput", Movement.y);
-            anim.SetBool("isMoving", true);
+            Anim.SetFloat("xInput", Movement.x);
+            Anim.SetFloat("yInput", Movement.y);
+            Anim.SetBool("isMoving", true);
         }
         else
         {
-            anim.SetBool("isMoving", false);
+            Anim.SetBool("isMoving", false);
         }
 
     }
@@ -54,7 +52,7 @@ public class Player : Entity
         if (collision.gameObject.tag == "Enemy")
         {
             Health -= collision.gameObject.GetComponent<Entity>().Attack;
-            Instantiate(blood, gameObject.transform.position, Quaternion.identity);
+            Instantiate(Blood, gameObject.transform.position, Quaternion.identity);
         }
     }
 }

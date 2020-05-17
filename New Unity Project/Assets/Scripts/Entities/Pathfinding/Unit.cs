@@ -8,7 +8,7 @@ public class Unit : Entity
     public GameObject intro;
     public Transform target;
     Vector3 targetPos;
-    float speed = 10;
+    public float speed = 1;
     float speedMultiplyer = .05f;
     public GridNode g;
     public Grid G;
@@ -50,7 +50,6 @@ public class Unit : Entity
 
             if (distance <= DistanceAllowed && gameObject.tag == "Enemy")
             {
-                speed = 10;
                 Debug.Log("persuing...");
                 PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 
@@ -59,7 +58,6 @@ public class Unit : Entity
 
             else if (distance > DistanceAllowed)
             {
-                speed = 5;
 
                 //Randomize location to move to
                 
@@ -67,7 +65,7 @@ public class Unit : Entity
                 {
                     Debug.Log("Randomizing...");
                     Random.InitState((int)System.DateTime.Now.Ticks);
-                    targetPos = new Vector3(range(-16f, 16f), range(-16f, 16f), 0);
+                    targetPos = new Vector3(range(-9f, 10f), range(2f, 10f), 0);
                     g = G.NodeFromWorldPoint(targetPos);
                     if (g.walkable)
                     {
@@ -147,7 +145,7 @@ public class Unit : Entity
             for (int i = targetIndex; i < path.Length; i++)
             {
                 Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
+                Gizmos.DrawCube(path[i], new Vector3(.25f,.25f,.25f));
                 if (i == targetIndex)
                 {
                     Gizmos.DrawLine(transform.position, path[i]);

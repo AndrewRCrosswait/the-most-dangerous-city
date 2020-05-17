@@ -33,11 +33,9 @@ namespace RpgEngine.Dialoug
        public void startconvo() {
             if (talkingTo != null)
             {
-                Debug.Log(talkingTo.name);
                 // timeStartedConversation = Time.time;
                 if (CurrentIndex != talkingTo.Content.Length)
                 {
-                    Debug.Log("We have content to run");
                     NameText.text = talkingTo.gameObject.name;
                     Content.text = talkingTo.Content[CurrentIndex].Diologue;
                     Icon = talkingTo.Content[CurrentIndex].Icon;
