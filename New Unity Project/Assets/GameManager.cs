@@ -17,7 +17,11 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            InfoPage.SetActive(!InfoPage.activeSelf);
+            InfoPage.SetActive(true);
+        }
+        else if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            InfoPage.SetActive(false);
         }
     }
 }
