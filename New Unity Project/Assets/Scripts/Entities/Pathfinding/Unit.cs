@@ -19,6 +19,7 @@ public class Unit : Entity
     public GameObject plane;
     public Animator anim;
     public float DistanceAllowed = 20;
+    public float distance;
 
 
     //void Start()
@@ -38,14 +39,16 @@ public class Unit : Entity
 
     void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        distance = Vector3.Distance(target.position, transform.position);
 
         if (!intro.activeSelf)
         {
-            if (transform.position.x != 0f && transform.position.y != 0f)
+            if (transform.position != Vector3.zero)
             {
-                anim.SetFloat("xInput", transform.position.x);
-                anim.SetFloat("yInput", transform.position.y);
+                Vector3 dir = targetPos - transform.position;
+                dir.Normalize();
+                anim.SetFloat("xInput", dir.x);
+                anim.SetFloat("yInput", dir.y);
             }
 
             if (distance <= DistanceAllowed && gameObject.tag == "Enemy")
@@ -75,7 +78,11 @@ public class Unit : Entity
                 }
 
                 //Follow Path
-                PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                if(distance > 1)
+                {
+                    PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+
+                }
 
 
                 //check if location has been reached, if it has randomize again

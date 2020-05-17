@@ -1062,6 +1062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayGridGizmos: 1
   player: {fileID: 523317146}
+  Enemy: {fileID: 1385471593}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -3491,6 +3492,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358499971}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1385471587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2133431547463577907, guid: c76e78a982d16f64589e01c5bdba6fb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2133431546518137206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1385471588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385471587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ff84b9547a3844bb42f2a4ae7957b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayCast: {fileID: 0}
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 0
+  rayCastLength: 0
+  attackDistance: 1
+  moveSpeed: 0
+  timer: 0
+--- !u!4 &1385471593 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2133431547463577905, guid: c76e78a982d16f64589e01c5bdba6fb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2133431546518137206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1455302061 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4756539178045482584, guid: 076d630157c5455408f8ab75e2c75258,
