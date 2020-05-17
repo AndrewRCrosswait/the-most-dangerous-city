@@ -20,6 +20,7 @@ public class Player : Entity
     // Update is called once per frame
     private void Update()
     {
+        
         Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
         if (!DialogueBox.activeSelf)
         {
@@ -35,7 +36,7 @@ public class Player : Entity
             Speed = 0;
             gameObject.GetComponent<SpriteRenderer>().sprite = DeadSprite;
         }
-        if(Movement != Vector3.zero)
+        if (Movement != Vector3.zero)
         {
             Anim.SetFloat("xInput", Movement.x);
             Anim.SetFloat("yInput", Movement.y);
@@ -47,7 +48,7 @@ public class Player : Entity
         }
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
