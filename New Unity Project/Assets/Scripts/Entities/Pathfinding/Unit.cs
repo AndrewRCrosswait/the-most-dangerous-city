@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MovementType {random, room, hunt}
+
 public class Unit : Entity
 {
 
@@ -20,7 +22,9 @@ public class Unit : Entity
     public Animator anim;
     public float DistanceAllowed = 20;
     public float distance;
-
+    public MovementType Move;
+    public GameObject[] Room;
+    public GameObject currentRoom;
 
     //void Start()
     //{
@@ -34,11 +38,14 @@ public class Unit : Entity
         Random.InitState((int)System.DateTime.Now.Ticks);
         rPosReached = true;
         anim = GetComponent<Animator>();
+        Move = MovementType.room;
+        currentRoom = Room[0];
     }
 
 
     void Update()
     {
+
         distance = Vector3.Distance(target.position, transform.position);
 
         if (!intro.activeSelf)
