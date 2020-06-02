@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
 
         else
         {
-            print("Currently talking");
+            //print("Currently talking");
         }
 
     }

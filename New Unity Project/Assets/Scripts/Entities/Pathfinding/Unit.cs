@@ -8,7 +8,7 @@ public class Unit : Entity
 {
 
     public GameObject intro;
-    public Transform target;
+    public Transform player;
     Vector3 targetPos;
     public float speed = 1;
     float speedMultiplyer = .05f;
@@ -23,8 +23,10 @@ public class Unit : Entity
     public float DistanceAllowed = 20;
     public float distance;
     public MovementType Move;
-    public GameObject[] Room;
+    public List<GameObject> Room = new List<GameObject>();
     public GameObject currentRoom;
+    public float Timer = 15f;
+    public int CurrentRoomIndex;
 
     //void Start()
     //{
@@ -38,19 +40,19 @@ public class Unit : Entity
         Random.InitState((int)System.DateTime.Now.Ticks);
         rPosReached = true;
         anim = GetComponent<Animator>();
-        Move = MovementType.room;
         currentRoom = Room[0];
+        Move = MovementType.room;
     }
 
 
     void Update()
     {
 
-        distance = Vector3.Distance(target.position, transform.position);
+        distance = Vector3.Distance(player.position, transform.position);
 
         if (!intro.activeSelf)
         {
-            if (transform.position != Vector3.zero)
+            if (transform.position != Vector3.zero) //animation code
             {
                 Vector3 dir = targetPos - transform.position;
                 dir.Normalize();
@@ -58,19 +60,22 @@ public class Unit : Entity
                 anim.SetFloat("yInput", dir.y);
             }
 
-            if (distance <= DistanceAllowed && gameObject.tag == "Enemy")
+            if (Move == MovementType.hunt)
             {
-                Debug.Log("persuing...");
-                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                Debug.Log("Movement Type hunt");
+                PathRequestManager.RequestPath(transform.position, player.position, OnPathFound);
+            }
+            if (distance <= DistanceAllowed) //Hunting
+            {
+                
+                Move = MovementType.hunt;
 
             }
 
-
-            else if (distance > DistanceAllowed)
+            if( Move == MovementType.random)
             {
-
-                //Randomize location to move to
-                
+                Debug.Log("Movement Type Random");
+                Timer-= .01f;
                 if (rPosReached)
                 {
                     Debug.Log("Randomizing...");
@@ -85,7 +90,7 @@ public class Unit : Entity
                 }
 
                 //Follow Path
-                if(distance > 1)
+                if (distance > 1 && rPosReached == false)
                 {
                     PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
 
@@ -99,9 +104,33 @@ public class Unit : Entity
                     rPosReached = true;
                 }
 
-
+                if (Timer <= 0)
+                {
+                    Move = MovementType.room;
+                    Timer = 1f;
+                }
             }
 
+            if(Move == MovementType.room)
+            {
+                Debug.Log("Movement Type Room");
+                PathRequestManager.RequestPath(transform.position, currentRoom.transform.position, OnPathFound);
+                if (transform.position == currentRoom.transform.position)
+                {
+                    Debug.Log("Room Reached");
+                    GameObject T = Room[CurrentRoomIndex];
+                    Room.RemoveAt(CurrentRoomIndex);
+                    Room.Add(T);
+                    CurrentRoomIndex++;
+                    currentRoom = Room[CurrentRoomIndex];
+                    Move = MovementType.random;
+                }
+            }
+
+            if(distance> DistanceAllowed && Move == MovementType.hunt)
+            {
+                Move = MovementType.room;
+            }
 
         }
 

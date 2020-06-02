@@ -25,7 +25,6 @@ public class NPCMovement : MonoBehaviour
     {
         if (!DialogueBox.activeSelf)
         {
-            Debug.Log("Move");
             transform.Translate(XDirection * Time.deltaTime, YDirection * Time.deltaTime, 0);
         }
         if (XDirection != 0f && YDirection != 0f)
