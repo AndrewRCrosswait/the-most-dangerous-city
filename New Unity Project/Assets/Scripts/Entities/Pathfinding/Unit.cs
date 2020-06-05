@@ -111,29 +111,34 @@ public class Unit : Entity
                 }
             }
 
-            if(Move == MovementType.room)
+            if (Move == MovementType.room)
             {
                 Debug.Log("Movement Type Room");
                 PathRequestManager.RequestPath(transform.position, currentRoom.transform.position, OnPathFound);
-                if (transform.position == currentRoom.transform.position)
-                {
-                    Debug.Log("Room Reached");
-                    GameObject T = Room[CurrentRoomIndex];
-                    Room.RemoveAt(CurrentRoomIndex);
-                    Room.Add(T);
-                    CurrentRoomIndex++;
-                    currentRoom = Room[CurrentRoomIndex];
-                    Move = MovementType.random;
-                }
+                
             }
 
-            if(distance> DistanceAllowed && Move == MovementType.hunt)
+            if (distance> DistanceAllowed && Move == MovementType.hunt)
             {
                 Move = MovementType.room;
             }
 
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Room" && Move == MovementType.room)
+        {
+            Debug.Log("Room Reached");
+            GameObject T = Room[CurrentRoomIndex];
+            Room.RemoveAt(CurrentRoomIndex);
+            Room.Add(T);
+            CurrentRoomIndex++;
+            currentRoom = Room[CurrentRoomIndex];
+            Move = MovementType.random;
+        }
     }
 
     public void generateRandPos(Vector3 target)
