@@ -27,6 +27,11 @@ public class Unit : Entity
     public GameObject currentRoom;
     public float Timer = 15f;
     public int CurrentRoomIndex;
+    private Room room;
+    private float xMin;
+    private float xMax;
+    private float yMin;
+    private float yMax;
 
     //void Start()
     //{
@@ -80,25 +85,27 @@ public class Unit : Entity
                 {
                     Debug.Log("Randomizing...");
                     Random.InitState((int)System.DateTime.Now.Ticks);
-                    targetPos = new Vector3(range(-9f, 10f), range(2f, 10f), 0);
+                    targetPos = new Vector3(range(xMin,xMax), range(yMin, yMax), 0);
                     g = G.NodeFromWorldPoint(targetPos);
                     if (g.walkable)
                     {
                         Debug.Log("heading...");
+                        // follow path
+                        PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
                         rPosReached = false;
                     }
                 }
 
                 //Follow Path
-                if (distance > 1 && rPosReached == false)
+                if (rPosReached == false)
                 {
-                    PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                    //PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);   location change to above if statement's nested if
 
                 }
 
 
                 //check if location has been reached, if it has randomize again
-                if (Vector3.Distance(targetPos, gameObject.transform.position) < 3)
+                if (Vector3.Distance(targetPos, gameObject.transform.position) < 1)
                 {
                     Debug.Log("Position Reached");
                     rPosReached = true;
@@ -111,11 +118,21 @@ public class Unit : Entity
                 }
             }
 
-            if (Move == MovementType.room)
+            if (Move == MovementType.room)  //Room Movement
             {
                 Debug.Log("Movement Type Room");
                 PathRequestManager.RequestPath(transform.position, currentRoom.transform.position, OnPathFound);
-                
+                if(room != currentRoom.GetComponent<Room>())
+                {
+                    room = currentRoom.GetComponent<Room>();
+                    xMin = room.xMin;
+                    xMax = room.xMax;
+                    yMin = room.yMin;
+                    yMax = room.yMax;
+
+                }
+
+
             }
 
             if (distance> DistanceAllowed && Move == MovementType.hunt)
@@ -133,9 +150,16 @@ public class Unit : Entity
         {
             Debug.Log("Room Reached");
             GameObject T = Room[CurrentRoomIndex];
-            Room.RemoveAt(CurrentRoomIndex);
-            Room.Add(T);
-            CurrentRoomIndex++;
+         //   Room.RemoveAt(CurrentRoomIndex);
+          //  Room.Add(T);
+            if(CurrentRoomIndex == Room.Count)
+            {
+                CurrentRoomIndex = 0;
+            }
+            else
+            {
+                CurrentRoomIndex++;
+            }
             currentRoom = Room[CurrentRoomIndex];
             Move = MovementType.random;
         }
