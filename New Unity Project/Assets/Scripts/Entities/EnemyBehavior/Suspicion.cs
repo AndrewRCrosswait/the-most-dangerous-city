@@ -8,7 +8,7 @@ public class Suspicion : MonoBehaviour
     public Transform player; 
     public float maxClockTimer; // Start value of the clock timer.
     private float clockTimer;
-    private float currentSuspicion = 0.0f;
+    public float currentSuspicion = 0.0f;
     public float maxSuspicion;
     private float distanceToPlayer;
 

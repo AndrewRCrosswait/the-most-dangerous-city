@@ -34,6 +34,7 @@ public class Unit : Entity
     public float yMax;
     public float randX;
     public float randY;
+    private float sus;
 
     //void Start()
     //{
@@ -56,7 +57,7 @@ public class Unit : Entity
     {
 
         distance = Vector3.Distance(player.position, transform.position);
-
+        sus = GetComponent<Suspicion>().currentSuspicion;
         if (!intro.activeSelf)
         {
             if (transform.position != Vector3.zero) //animation code
@@ -72,7 +73,7 @@ public class Unit : Entity
               //  Debug.Log("Movement Type hunt");
                 PathRequestManager.RequestPath(transform.position, player.position, OnPathFound);
             }
-            if (distance <= DistanceAllowed) //Hunting
+            if (distance <= DistanceAllowed && sus >= 10) //Hunting
             {
                 
                 Move = MovementType.hunt;
