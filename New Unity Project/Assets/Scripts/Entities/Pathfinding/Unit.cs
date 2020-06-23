@@ -28,10 +28,12 @@ public class Unit : Entity
     public float Timer = 15f;
     public int CurrentRoomIndex;
     private Room room;
-    private float xMin;
-    private float xMax;
-    private float yMin;
-    private float yMax;
+    public float xMin;
+    public float xMax;
+    public float yMin;
+    public float yMax;
+    public float randX;
+    public float randY;
 
     //void Start()
     //{
@@ -67,7 +69,7 @@ public class Unit : Entity
 
             if (Move == MovementType.hunt)
             {
-                Debug.Log("Movement Type hunt");
+              //  Debug.Log("Movement Type hunt");
                 PathRequestManager.RequestPath(transform.position, player.position, OnPathFound);
             }
             if (distance <= DistanceAllowed) //Hunting
@@ -85,7 +87,9 @@ public class Unit : Entity
                 {
                     Debug.Log("Randomizing...");
                     Random.InitState((int)System.DateTime.Now.Ticks);
-                    targetPos = new Vector3(range(xMin,xMax), range(yMin, yMax), 0);
+                    randX = range(xMin, xMax);
+                    randY = range(yMin, yMax);
+                    targetPos = new Vector3(randX, randY, 0);
                     g = G.NodeFromWorldPoint(targetPos);
                     if (g.walkable)
                     {
@@ -99,7 +103,7 @@ public class Unit : Entity
                 //Follow Path
                 if (rPosReached == false)
                 {
-                    //PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);   location change to above if statement's nested if
+                    PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound); //  location change to above if statement's nested if
 
                 }
 
@@ -114,13 +118,14 @@ public class Unit : Entity
                 if (Timer <= 0)
                 {
                     Move = MovementType.room;
-                    Timer = 1f;
+                    Timer = 15f;
+                    rPosReached = true;
                 }
             }
 
             if (Move == MovementType.room)  //Room Movement
             {
-                Debug.Log("Movement Type Room");
+               // Debug.Log("Movement Type Room");
                 PathRequestManager.RequestPath(transform.position, currentRoom.transform.position, OnPathFound);
                 if(room != currentRoom.GetComponent<Room>())
                 {
@@ -146,13 +151,15 @@ public class Unit : Entity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Room" && Move == MovementType.room)
+        if (collision.gameObject.tag == "Room" && Move == MovementType.room && collision.gameObject == currentRoom.gameObject)
         {
             Debug.Log("Room Reached");
             GameObject T = Room[CurrentRoomIndex];
-         //   Room.RemoveAt(CurrentRoomIndex);
-          //  Room.Add(T);
-            if(CurrentRoomIndex == Room.Count)
+            //   Room.RemoveAt(CurrentRoomIndex);
+            //  Room.Add(T);
+            currentRoom = Room[CurrentRoomIndex];
+
+            if (CurrentRoomIndex == (Room.Count - 1))
             {
                 CurrentRoomIndex = 0;
             }
@@ -160,8 +167,10 @@ public class Unit : Entity
             {
                 CurrentRoomIndex++;
             }
-            currentRoom = Room[CurrentRoomIndex];
             Move = MovementType.random;
+            Random.InitState((int)System.DateTime.Now.Ticks);
+            randX = range(xMin, xMax);
+            randY = range(yMin, yMax);
         }
     }
 
