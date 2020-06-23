@@ -16,7 +16,9 @@ public class Suspicion : MonoBehaviour
     {
         distanceToPlayer = Vector3.Distance(player.position, transform.position);
         if(currentSuspicion < maxSuspicion)
-        currentSuspicion += Mathf.Abs(1 / distanceToPlayer) * 10;
+        currentSuspicion += (1.0f / distanceToPlayer * 10.0f) - 1.0f;
+        if (currentSuspicion < 0.0f)
+            currentSuspicion = 0.0f;
         Debug.Log(currentSuspicion);
     }
 
