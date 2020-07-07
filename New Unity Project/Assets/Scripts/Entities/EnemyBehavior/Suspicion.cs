@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -12,28 +13,47 @@ public class Suspicion : MonoBehaviour
     public float maxSuspicion;
     private float distanceToPlayer;
 
-    void ChangeSuspicionBasedOnDistance()
+    private void ChangeSuspicionBasedOnBlockingObjects()
+    {
+        /* Checks for objects that will lower suspicion by being in between player and enemy
+         STILL BEING WORKED ON!!!
+        Each NPC having two colliders makes it hard to determine number of blocking objects.
+        */
+
+        RaycastHit2D[] line = Physics2D.LinecastAll(gameObject.transform.position, player.transform.position);
+        List<RaycastHit2D> listLine = line.ToList();
+       listLine.RemoveAt(0);
+       
+       foreach (var raycastHit2D in listLine)
+       {
+           if (raycastHit2D.collider.isTrigger)
+           {
+               listLine.Remove(raycastHit2D);
+           }
+       }
+    }
+    private void ChangeSuspicionBasedOnDistance()
     {
         distanceToPlayer = Vector3.Distance(player.position, transform.position);
         if(currentSuspicion < maxSuspicion)
-        currentSuspicion += (1.0f / distanceToPlayer * 10.0f) - 1.0f;
+            currentSuspicion += (1.0f / distanceToPlayer * 10.0f) - 1.0f;
         if (currentSuspicion < 0.0f)
             currentSuspicion = 0.0f;
         Debug.Log(currentSuspicion);
     }
 
- void ChangeSuspicionValue()
+ private void ChangeSuspicionValue()
     {
         clockTimer -= Time.deltaTime;
         if (clockTimer < 0.0f)
         {
             // ADD ANY FUNCTIONS THAT MODIFY CURRENT SUSPICION HERE!!
             ChangeSuspicionBasedOnDistance();
-            
+            ChangeSuspicionBasedOnBlockingObjects();
             clockTimer = maxClockTimer;
         }
     }
-    void Update()
+    private void Update()
     {
         ChangeSuspicionValue();
 
@@ -41,5 +61,6 @@ public class Suspicion : MonoBehaviour
     private void Start()
     {
         clockTimer = maxClockTimer;
+        Debug.DrawLine(gameObject.transform.position, player.position, Color.white);
     }
 }
