@@ -16,21 +16,16 @@ public class Suspicion : MonoBehaviour
     private void ChangeSuspicionBasedOnBlockingObjects()
     {
         /* Checks for objects that will lower suspicion by being in between player and enemy
-         STILL BEING WORKED ON!!!
+         WORKS ONLY IF EVERY BLOCKING OBJECT HAS 2 COLLIDERS!!!
         Each NPC having two colliders makes it hard to determine number of blocking objects.
         */
 
         RaycastHit2D[] line = Physics2D.LinecastAll(gameObject.transform.position, player.transform.position);
         List<RaycastHit2D> listLine = line.ToList();
        listLine.RemoveAt(0);
-       
-       foreach (var raycastHit2D in listLine)
-       {
-           if (raycastHit2D.collider.isTrigger)
-           {
-               listLine.Remove(raycastHit2D);
-           }
-       }
+
+       var numBlockingObjects = listLine.Count / 2;
+       currentSuspicion -= numBlockingObjects * 0.1f;
     }
     private void ChangeSuspicionBasedOnDistance()
     {
