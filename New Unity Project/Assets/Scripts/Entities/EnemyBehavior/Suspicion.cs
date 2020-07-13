@@ -23,8 +23,8 @@ public class Suspicion : MonoBehaviour
         RaycastHit2D[] line = Physics2D.LinecastAll(gameObject.transform.position, player.transform.position);
         List<RaycastHit2D> listLine = line.ToList();
        listLine.RemoveAt(0);
-
-       var numBlockingObjects = listLine.Count / 2;
+       listLine.RemoveAt(listLine.Count - 1);
+       var numBlockingObjects = listLine.Count;
        currentSuspicion -= numBlockingObjects * 0.1f;
     }
     private void ChangeSuspicionBasedOnDistance()
