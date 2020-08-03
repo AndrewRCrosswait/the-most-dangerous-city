@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MovementType {random, room, hunt}
+public enum MovementType { random, room, hunt }
 
 public class Unit : Entity
 {
@@ -11,7 +11,6 @@ public class Unit : Entity
     public Transform player;
     Vector3 targetPos;
     public float speed = 1;
-    float speedMultiplyer = .05f;
     public GridNode g;
     public Grid G;
     Vector3[] path;
@@ -28,12 +27,8 @@ public class Unit : Entity
     public float Timer = 15f;
     public int CurrentRoomIndex;
     private Room room;
-    public float xMin;
-    public float xMax;
-    public float yMin;
-    public float yMax;
-    public float randX;
-    public float randY;
+    public float xMin, xMax, yMin, yMax;
+    public float randX, randY;
     private float sus;
 
     //void Start()
@@ -70,20 +65,20 @@ public class Unit : Entity
 
             if (Move == MovementType.hunt)
             {
-              //  Debug.Log("Movement Type hunt");
+                //  Debug.Log("Movement Type hunt");
                 PathRequestManager.RequestPath(transform.position, player.position, OnPathFound);
             }
             if (distance <= DistanceAllowed && sus >= 10) //Hunting
             {
-                
+
                 Move = MovementType.hunt;
 
             }
 
-            if( Move == MovementType.random)
+            if (Move == MovementType.random)
             {
                 Debug.Log("Movement Type Random");
-                Timer-= .01f;
+                Timer -= .01f;
                 if (rPosReached)
                 {
                     Debug.Log("Randomizing...");
@@ -126,9 +121,9 @@ public class Unit : Entity
 
             if (Move == MovementType.room)  //Room Movement
             {
-               // Debug.Log("Movement Type Room");
+                // Debug.Log("Movement Type Room");
                 PathRequestManager.RequestPath(transform.position, currentRoom.transform.position, OnPathFound);
-                if(room != currentRoom.GetComponent<Room>())
+                if (room != currentRoom.GetComponent<Room>())
                 {
                     room = currentRoom.GetComponent<Room>();
                     xMin = room.xMin;
@@ -141,7 +136,7 @@ public class Unit : Entity
 
             }
 
-            if (distance> DistanceAllowed && Move == MovementType.hunt)
+            if (distance > DistanceAllowed && Move == MovementType.hunt)
             {
                 Move = MovementType.room;
             }
@@ -227,7 +222,7 @@ public class Unit : Entity
             for (int i = targetIndex; i < path.Length; i++)
             {
                 Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], new Vector3(.25f,.25f,.25f));
+                Gizmos.DrawCube(path[i], new Vector3(.25f, .25f, .25f));
                 if (i == targetIndex)
                 {
                     Gizmos.DrawLine(transform.position, path[i]);
