@@ -11,6 +11,8 @@ public class Player : Entity
 
     public Animator Anim;
 
+    public int NpcInRange { get; private set; } = 0; // For counting number of NPCs in circle around playerTransform.
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -54,6 +56,20 @@ public class Player : Entity
         {
             Health -= collision.gameObject.GetComponent<Entity>().Attack;
             Instantiate(Blood, gameObject.transform.position, Quaternion.identity);
+        }
+        if (collision.gameObject.tag == "Character")
+        {
+            NpcInRange++;
+            Debug.Log($"NPCs who entered Circle: {NpcInRange}");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Character")
+        {
+            NpcInRange--;
+            Debug.Log($"NPCs who entered Circle: {NpcInRange}");
         }
     }
 }

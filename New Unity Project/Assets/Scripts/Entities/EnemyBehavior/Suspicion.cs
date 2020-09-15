@@ -6,46 +6,70 @@ using UnityEngine;
 
 public class Suspicion : MonoBehaviour
 {
-    public Transform player; 
+    public Player player;
+    public Transform playerTransform;
+    
+    public CircleCollider2D circleCollider2D;
     public float maxClockTimer; // Start value of the clock timer.
     private float clockTimer;
-    public float currentSuspicion = 0.0f;
+    private float currentSuspicion = 0.0f;
+    private float suspicionValueChange = 0.0f;
     public float maxSuspicion;
     private float distanceToPlayer;
 
+    public float CurrentSuspicion
+    {
+        get => currentSuspicion;
+        set => currentSuspicion = value;
+    }
+    
     private void ChangeSuspicionBasedOnBlockingObjects()
     {
-        /* Checks for objects that will lower suspicion by being in between player and enemy
-         WORKS ONLY IF EVERY BLOCKING OBJECT HAS 2 COLLIDERS!!!
-        Each NPC having two colliders makes it hard to determine number of blocking objects.
-        */
+        
 
-        RaycastHit2D[] line = Physics2D.LinecastAll(gameObject.transform.position, player.transform.position);
+        RaycastHit2D[] line = Physics2D.LinecastAll(gameObject.transform.position, playerTransform.transform.position);
         List<RaycastHit2D> listLine = line.ToList();
        listLine.RemoveAt(0);
        listLine.RemoveAt(listLine.Count - 1);
        var numBlockingObjects = listLine.Count;
-       currentSuspicion -= numBlockingObjects * 0.1f;
+       suspicionValueChange -= numBlockingObjects * 0.1f;
+    }
+
+    private float ChangeSuspicionIfEnemyIsNotInTheSameRoom()
+    {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        return renderer.isVisible ? 1.0f : 0.0f;
     }
     private void ChangeSuspicionBasedOnDistance()
     {
-        distanceToPlayer = Vector3.Distance(player.position, transform.position);
+        distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
         if(currentSuspicion < maxSuspicion)
-            currentSuspicion += (1.0f / distanceToPlayer * 10.0f) - 1.0f;
-        if (currentSuspicion < 0.0f)
-            currentSuspicion = 0.0f;
-        Debug.Log(currentSuspicion);
+            suspicionValueChange += (1.0f / distanceToPlayer * 10.0f) - 1.0f;
+        if (suspicionValueChange < 0.0f)
+            suspicionValueChange = 0.0f;
+        
     }
 
- private void ChangeSuspicionValue()
+    private void ChangeSuspicionBasedOnCrowd()
+    {
+        suspicionValueChange -= 0.1f * player.NpcInRange;
+    }
+
+    private void ChangeSuspicionValue()
     {
         clockTimer -= Time.deltaTime;
         if (clockTimer < 0.0f)
         {
-            // ADD ANY FUNCTIONS THAT MODIFY CURRENT SUSPICION HERE!!
+            
+            // ADD ANY FUNCTIONS THAT MODIFIES CURRENT SUSPICION HERE!!
+            
             ChangeSuspicionBasedOnDistance();
             ChangeSuspicionBasedOnBlockingObjects();
+            ChangeSuspicionBasedOnCrowd();
+            currentSuspicion += suspicionValueChange * ChangeSuspicionIfEnemyIsNotInTheSameRoom();
+            Debug.Log(currentSuspicion);
             clockTimer = maxClockTimer;
+            suspicionValueChange = 0.0f;
         }
     }
     private void Update()
@@ -56,6 +80,7 @@ public class Suspicion : MonoBehaviour
     private void Start()
     {
         clockTimer = maxClockTimer;
-        Debug.DrawLine(gameObject.transform.position, player.position, Color.white);
+        
+        
     }
 }
