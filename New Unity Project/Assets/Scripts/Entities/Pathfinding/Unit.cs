@@ -57,7 +57,7 @@ public class Unit : Entity
     {
 
         distance = Vector3.Distance(player.position, transform.position);
-        sus = GetComponent<Suspicion>().currentSuspicion;
+        sus = GetComponent<Suspicion>().CurrentSuspicion;
         if (!intro.activeSelf)
         {
             if (transform.position != Vector3.zero) //animation code
